@@ -121,6 +121,7 @@
 [submodule "builder/mods_src/minetest_game"]
 	path = builder/mods_src/minetest_game
 	url = https://github.com/bell07/minetest_game
+	branch = stable-5
 [submodule "builder/mods_src/mobs_redo/mobs_ghost_redo"]
 	path = builder/mods_src/mobs_redo/mobs_ghost_redo
 	url = https://codeberg.org/Hamlet/mobs_ghost_redo
