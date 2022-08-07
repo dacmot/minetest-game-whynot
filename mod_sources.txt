@@ -20,7 +20,7 @@ origin https://github.com/Ezhh/abriglass/ (fetch)
 Mod: decor/abriglass
 
 origin https://github.com/mt-mods/basic_materials (fetch)
-* 9d55f9916d20779ecbf93c7e95dae8adebd2079b Fix item alias in Hades Revisited integration. (#13)
+* 0893974b054a2191b5e2d5447ee4fc73f9c35f6a github luacheck workflow
 Mod: decor/basic_materials
 
 origin https://github.com/Napiophelios/campfire (fetch)
@@ -44,11 +44,11 @@ origin https://github.com/HybridDog/heads (fetch)
 Mod: decor/heads
 
 origin https://github.com/mt-mods/home_workshop_modpack (fetch)
-* eacbe80faec8be21e774bd2f9accad4ac33d3cfd Merge pull request #6 from mt-mods/vending_crafts
+* 0724b0dda9bba5ec9b7bd36c847ae2c1edc366b7 fix and add crafting recipes (#10)
 Mod: decor/home_workshop_modpack
 
 origin https://github.com/mt-mods/homedecor_modpack (fetch)
-* 3ba59dc2d5d14c74bc2664eebcbff764f96f6f26 fix almost all warning spam (#26)
+* 97d4c65230a1821cd273510a1daea19e494f5c7c remove weird, redundant loop
 Mod: decor/homedecor_modpack
 
 origin https://github.com/bell07/minetest-laptop (fetch)
@@ -60,7 +60,7 @@ origin https://repo.or.cz/minetest_mtg_plus.git (fetch)
 Mod: decor/mtg_plus
 
 origin https://github.com/minetest-mods/mydoors (fetch)
-* 1e7ace698bf06f363955d4e77a1fe7f68ecb1128 Merge: Mod rewrite by oversword
+* c8db76c2dc564ce3502c54a9f23143ec45215c19 Replace deprecated .txt files with mod.conf (#22)
 Mod: decor/mydoors
 
 origin https://github.com/minetest-mods/myroofs (fetch)
@@ -151,6 +151,10 @@ origin https://github.com/dacmot/sfcraftguide.git (fetch)
 * 3df7b1eb7474fd2b209f025e18656f907b1b94cb Update README
 Mod: libs/sfcraftguide
 
+origin https://github.com/mt-mods/sound_api.git (fetch)
+* 42d876fa75c690f398bab33caee38adf61d2358f improve/split readme per sx suggestions
+Mod: libs/sound_api
+
 origin https://github.com/Treer/cloudlands/ (fetch)
 * 0009137327942697a5df048d1a4f6706970509aa Update README.md
 Mod: mapgen/cloudlands
@@ -188,11 +192,11 @@ origin https://codeberg.org/Hamlet/mobs_ghost_redo (fetch)
 Mod: mobs_redo/mobs_ghost_redo
 
 origin https://notabug.org/TenPlus1/mobs_monster (fetch)
-* ae0e50bb692e38faf43ee70a18a3fa5773dbacf0 add spanish translation (thanks mckaygerhard)
+* 1ba32b39eb586e29e7d9a8c757ecb45c9d9068a5 add can_leap setting to mese monster
 Mod: mobs_redo/mobs_monster
 
 origin https://notabug.org/TenPlus1/mobs_redo (fetch)
-* 6f8b6fe3f510aa0a60adf975f625c28b91825a34 select proper animation for flying mobs
+* 25ab9591e4744fe8b26d3fbd565c25cc4906703f add 'can_leap' setting to mob def, update api.txt
 Mod: mobs_redo/mobs_redo
 
 origin https://github.com/minetest-mods/3d_armor (fetch)
@@ -244,7 +248,7 @@ origin https://repo.or.cz/minetest_show_wielded_item.git (fetch)
 Mod: player/show_wielded_item
 
 origin https://github.com/minetest-mods/skinsdb (fetch)
-* 03d424fea7edca9338d22fa3ca5b547af5726f45 fix hand node not respected the range
+* b769824d249b432a4f4f6a659aa6dae1a09071a8 Add Continuous Integration and LuaCheck (#71)
 Mod: player/skinsdb
 
 origin https://github.com/bell07/minetest-smart_sfinv (fetch)
@@ -252,7 +256,7 @@ origin https://github.com/bell07/minetest-smart_sfinv (fetch)
 Mod: player/smart_sfinv_modpack
 
 origin https://github.com/minetest-mods/wielded_light (fetch)
-* 1646439ac4924f534af05d639af900d1d44506cd Use get_luaentity rather than deprecated get_entity_name call (#19)
+* b5236562af9772dff8522fe2bda5b5f738e81b88 Bugfixes. Preserve timers and param2 (#20)
 Mod: player/wielded_light
 
 origin https://github.com/taikedz/everamzah-backpacks (fetch)
@@ -260,11 +264,11 @@ origin https://github.com/taikedz/everamzah-backpacks (fetch)
 Mod: tools/backpacks
 
 origin https://notabug.org/tenplus1/bonemeal (fetch)
-* 4c50a02a0ee8f70aeeb3871a7a7d6bd4582ac34e change of jungle grass on rainforest litter (thx nixnoxus)
+* 1315e2cc5f8630cdffb2f5e9c2139ca8ef756447 add df_primordial_items and tweak surface detection for decorations
 Mod: tools/bonemeal
 
 origin https://github.com/SmallJoker/boost_cart (fetch)
-* 3bd7d6f8ca0425e4497df389f761bcfc24195230 Fix item pickups not working sometimes
+* e458734cc54745fa7b8e19fbcfd038a1ad2b4946 Import two my MTG commits for better driving experience
 Mod: tools/boost_cart
 
 origin https://github.com/minetest-mods/ccompass (fetch)
@@ -292,11 +296,11 @@ origin https://github.com/petermaloney/helicopter (fetch)
 Mod: tools/helicopter
 
 origin https://github.com/minetest-mods/hopper (fetch)
-* 6ac1b6195136eb2ad6961c744f67e9775b7f0fd6 bring in translations from weblate.org
+* c691f370b4ff6054b76cc7e4c2ea623012e99238 Configurable inventory log level (#17)
 Mod: tools/hopper
 
 origin https://github.com/minetest-mods/jumping (fetch)
-* b5205e4e7d651306d31e2ea100ad75abb1856401 opt-depend on default [squash] (#9)
+* 43454623845932edf61d6359f489ca34fe72bf93 General mod maintenance (#11)
 Mod: tools/jumping
 
 origin https://github.com/thePlasm/maidroid (fetch)
