@@ -20,7 +20,7 @@ origin https://github.com/Ezhh/abriglass/ (fetch)
 Mod: decor/abriglass
 
 origin https://github.com/mt-mods/basic_materials (fetch)
-* 0893974b054a2191b5e2d5447ee4fc73f9c35f6a github luacheck workflow
+* a4dab9c4c808a3ea10e76e358d3af1a1be4c2f0b Fix materials for Hades Revisited 0.15.2 (#14)
 Mod: decor/basic_materials
 
 origin https://github.com/Napiophelios/campfire (fetch)
@@ -44,11 +44,11 @@ origin https://github.com/HybridDog/heads (fetch)
 Mod: decor/heads
 
 origin https://github.com/mt-mods/home_workshop_modpack (fetch)
-* 0724b0dda9bba5ec9b7bd36c847ae2c1edc366b7 fix and add crafting recipes (#10)
+* 40b911e18426a78ba9c4d07363a31b6cfebaec86 Prevent warning for accessing missing global (#11)
 Mod: decor/home_workshop_modpack
 
 origin https://github.com/mt-mods/homedecor_modpack (fetch)
-* 97d4c65230a1821cd273510a1daea19e494f5c7c remove weird, redundant loop
+* 806c8c5e78db52ef8020f0368f82bfc365a61c44 last craft
 Mod: decor/homedecor_modpack
 
 origin https://github.com/bell07/minetest-laptop (fetch)
@@ -60,7 +60,7 @@ origin https://repo.or.cz/minetest_mtg_plus.git (fetch)
 Mod: decor/mtg_plus
 
 origin https://github.com/minetest-mods/mydoors (fetch)
-* c8db76c2dc564ce3502c54a9f23143ec45215c19 Replace deprecated .txt files with mod.conf (#22)
+* b2f8fa3e4aec7d680ea2c892b5c413f3197bf1f0 Fix conflicting door craft recipes (#23)
 Mod: decor/mydoors
 
 origin https://github.com/minetest-mods/myroofs (fetch)
@@ -176,11 +176,11 @@ origin https://github.com/GreenXenith/tac_nayn (fetch)
 Mod: mapgen/tac_nayn
 
 origin https://github.com/minetest-mods/mesecons (fetch)
-* c4f9336a2677dcfaa6969d6c471acdb0c4c55f1f Exit with error if vports do not exist for any reason (#618)
+* da57a6214af9b23e50e319a5902b390e613725ee microcontroller: fix unsafe pattern usage (#620)
 Mod: mesecons/mesecons
 
 origin https://github.com/minetest/minetest_game (fetch)
-* e86d0dff9466c1efd170fac7ddf86e1b92a3b242 TNT node drop particles: Only pick string tiles as fallback
+* b55329d3e13120df0f4d70e742bf44e8edf79faf Merge remote-tracking branch 'origin/stable-5' into HEAD
 Mod: minetest_game/minetest_game
 
 origin https://github.com/raymoo/cmi.git (fetch)
@@ -196,7 +196,7 @@ origin https://notabug.org/TenPlus1/mobs_monster (fetch)
 Mod: mobs_redo/mobs_monster
 
 origin https://notabug.org/TenPlus1/mobs_redo (fetch)
-* 25ab9591e4744fe8b26d3fbd565c25cc4906703f add 'can_leap' setting to mob def, update api.txt
+* 83f0b901a4e0e127129c290d727af710da79d15a add self.messages field
 Mod: mobs_redo/mobs_redo
 
 origin https://github.com/minetest-mods/3d_armor (fetch)
@@ -220,11 +220,11 @@ origin https://github.com/minetest-mods/cozy (fetch)
 Mod: player/cozy
 
 origin https://repo.or.cz/minetest_hbarmor.git (fetch)
-* 93d994cbad6a16f985919add5776b568d7a5d6d3 Version 1.0.0
+* a231a5fb82e4430f4022ee670731a2d02cad819f Version 1.0.1
 Mod: player/hbarmor
 
 origin https://repo.or.cz/minetest_hbhunger.git (fetch)
-* 470b0f693d1b31573f5ae928cc6961ee9366887e Version 1.1.2
+* 0777594e783b3faa749f2c72dff39aff229e60c8 Add Wuzzy to mailmap
 Mod: player/hbhunger
 
 origin https://github.com/minetest-mods/hbsprint (fetch)
@@ -232,7 +232,7 @@ origin https://github.com/minetest-mods/hbsprint (fetch)
 Mod: player/hbsprint
 
 origin https://repo.or.cz/minetest_hudbars.git (fetch)
-* 812b2538ff0198c5c7b3707a80b3ebfa6b34f460 Version 2.3.3
+* dd2a9a008d63ae0be705903f1c56899f61029e7a Add mailmap for Wuzzy
 Mod: player/hudbars
 
 origin https://github.com/dacmot/moarmour (fetch)
@@ -264,7 +264,7 @@ origin https://github.com/taikedz/everamzah-backpacks (fetch)
 Mod: tools/backpacks
 
 origin https://notabug.org/tenplus1/bonemeal (fetch)
-* 1315e2cc5f8630cdffb2f5e9c2139ca8ef756447 add df_primordial_items and tweak surface detection for decorations
+* 1f4c1a1fd757835127c65c3199e5b9f67dea9053 fix df_trees tunnel tube growth
 Mod: tools/bonemeal
 
 origin https://github.com/SmallJoker/boost_cart (fetch)
