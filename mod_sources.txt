@@ -7,6 +7,10 @@ origin https://github.com/minetest-mods/lightning (fetch)
 * 10595463449df42ef81684f7561773e9245f3a6a Add a setting to disable the random fire chance. (#18)
 Mod: ambience/lightning
 
+origin https://github.com/rollerozxa/minetest-enable-shadows.git (fetch)
+* c8c53ddda15c32b951be4ebca5639e22de6a13de Add license
+Mod: ambience/shadows
+
 origin https://github.com/Ezhh/under_sky (fetch)
 * 5f8d5701ce30774038e2bdf8eaba0f2b0f22cc38 Hide sun, moon and stars when underground
 Mod: ambience/under_sky
