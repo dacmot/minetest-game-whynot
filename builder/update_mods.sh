@@ -52,6 +52,10 @@ git submodule status | xargs -P 1 -n 3 bash -c 'source "$PROJ"/builder/lib-confi
 # Update built-in mods (not submodules)
 $RSYNC $SRC/libs/whynot_compat $DST/libs/
 git diff --quiet -- $DST/libs/whynot_compat || git commit $VERBOSITY -m "Update whynot_compat" $DST/libs/whynot_compat
+$RSYNC $SRC/libs/whynot_utils $DST/libs/
+git diff --quiet -- $DST/libs/whynot_utils || git commit $VERBOSITY -m "Update whynot_utils" $DST/libs/whynot_utils
+$RSYNC $SRC/mapgen/whynot_mapgen $DST/mapgen/
+git diff --quiet -- $DST/mapgen/whynot_mapgen || git commit $VERBOSITY -m "Update whynot_mapgen" $DST/mapgen/whynot_mapgen
 
 # Finalize mods update by commiting mod_sources.txt
 git diff --quiet -- $LOG || git commit $VERBOSITY -m "Update mod_sources.txt" $LOG

@@ -37,4 +37,6 @@ git submodule status | xargs -P 1 -n 3 bash -c 'source "$PROJ"/builder/lib-confi
 
 # Update built-in mods (not submodules)
 $RSYNC $SRC/libs/whynot_compat $DST/libs/
+$RSYNC $SRC/libs/whynot_utils $DST/libs/
+$RSYNC $SRC/mapgen/whynot_mapgen $DST/mapgen/
 
