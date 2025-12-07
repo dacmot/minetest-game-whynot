@@ -1,6 +1,6 @@
 
 origin https://github.com/minetest-mirrors/ambience.git (fetch)
-* 9c4a1f1e2828ea989dc7340af540be2ef36842d2 change minetest. to core.
+* f971ba562f7bf1aae4c3648e12b8e78ac0cb0999 fix beach sound check
 Mod: ambience/ambience
 
 origin https://github.com/minetest-mods/lightning (fetch)
@@ -88,11 +88,11 @@ origin https://github.com/minetest-mods/ts_furniture (fetch)
 Mod: decor/ts_furniture
 
 origin https://github.com/mt-mods/unifieddyes (fetch)
-* 3fc82f92455082ac783d19657a949b4cba943321 Add zh_CN translation (#24)
+* 73c80155f81f121aafbf6ba6c35c1f7b88df6d90 Add support for brown and pink to `get_color_from_dye_name` (#26)
 Mod: decor/unifieddyes
 
 origin https://github.com/minetest-mirrors/farming.git (fetch)
-* 2d5720602369f3bc0f639e003ec8e2266d8d26e5 add Polish translation (thx BuszmoPL)
+* 088143a3610fc3e1644fce528768ce54469402d2 Fix some light levels
 Mod: flora_ores/farming
 
 origin https://codeberg.org/Dacmot/YellowCrystals.git (fetch)
@@ -124,7 +124,7 @@ origin https://github.com/GreenXenith/waffles (fetch)
 Mod: food/waffles
 
 origin https://github.com/APercy/airutils.git (fetch)
-* 197b5b621013e92b7c89781bb56aea1e5a41870c fix damage over slabs
+* d58353a22a4249b936e51793c1b39b80eb529b76 added fix when the mask option is removed
 Mod: libs/airutils
 
 origin https://repo.or.cz/minetest_doc.git (fetch)
@@ -156,7 +156,7 @@ origin https://codeberg.org/Dacmot/sfcraftguide.git (fetch)
 Mod: libs/sfcraftguide
 
 origin https://github.com/mt-mods/xcompat.git (fetch)
-* c024d0b6c84dbbf3c6f9709db31b2a3661b064c5 Add explanation and example of material usage (#54)
+* 7e0cff68d04c2fffbb61133a15afd01a13e82bfe Add obsidian material (#58)
 Mod: libs/xcompat
 
 origin https://github.com/Treer/cloudlands/ (fetch)
@@ -184,7 +184,7 @@ origin https://github.com/GreenXenith/tac_nayn (fetch)
 Mod: mapgen/tac_nayn
 
 origin https://github.com/minetest-mods/mesecons (fetch)
-* e2fc73da9893c2a2119f023bd1c79d77fc6eea7d Support for Hades Revisited (#710)
+* 57a134b555f9d72aced3117d37f858906362fee6 mesecons: Unify duplicated code
 Mod: mesecons/mesecons
 
 origin https://github.com/minetest/minetest_game (fetch)
@@ -196,15 +196,15 @@ origin https://codeberg.org/tenplus1/mobs_ghost_redo (fetch)
 Mod: mobs_redo/mobs_ghost_redo
 
 origin https://github.com/minetest-mirrors/mobs_monster.git (fetch)
-* 7e7f87fa2c6b9dda2b1098dcc1f6cfe073cb3e5f add hit_object to dm arrow
+* 616e556cb71a7a075e592d0ca4e5e015c00efbde increase fireball damage to 2
 Mod: mobs_redo/mobs_monster
 
 origin https://github.com/minetest-mirrors/mobs_redo.git (fetch)
-* db8fab6615a3c4c939c8d2e7cd46b2969efc9152 refactor spawn protected checks
+* 92cbeaba55bec22eacffac3806767a1f74f852f2 add 'can_spawn_protect' flag to mobs:register_egg
 Mod: mobs_redo/mobs_redo
 
 origin https://github.com/minetest-mods/3d_armor (fetch)
-* 8f775a64f0a29afbcc63cbcd78938c17609ed187 Rework armor stand inventories (#165)
+* 063505f9ea6f396da3b8084d0c96377d7a11b35b Update integration test to 5.4.0
 Mod: player/3d_armor
 
 origin https://gitlab.com/dacmot/awards.git (fetch)
@@ -304,7 +304,7 @@ origin https://github.com/APercy/hidroplane.git (fetch)
 Mod: tools/hidroplane
 
 origin https://github.com/minetest-mods/hopper (fetch)
-* 52a6a0dcca11430b401afa570cce409267dec805 Fix `allow_metadata_inventory_put` item count check (#34)
+* 24bd52dbabea74583447a96ce9a5db6ac85ded0f Make hoppers craftable for mcl
 Mod: tools/hopper
 
 origin https://github.com/minetest-mods/jumping (fetch)
