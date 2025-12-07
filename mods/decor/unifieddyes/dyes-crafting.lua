@@ -140,7 +140,7 @@ unifieddyes.palette_has_color["wallmounted_light_red"] = true
 
 unifieddyes.base_color_crafts = {
 	{ "red",		"flowers:rose",				nil,				nil,			nil,			nil,		4 },
-	{ "vermilion",	"dye:red",					"dye:orange",		nil,			nil,			nil,		3 },
+	{ "vermilion",	"dye:red",					"dye:orange",		nil,			nil,			nil,		2 },
 	{ "orange",		"flowers:tulip",			nil,				nil,			nil,			nil,		4 },
 	{ "orange",		"dye:red",					"dye:yellow",		nil,			nil,			nil,		2 },
 	{ "amber",		"dye:orange",				"dye:yellow",		nil,			nil,			nil,		2 },
