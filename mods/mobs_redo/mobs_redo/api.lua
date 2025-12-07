@@ -18,7 +18,7 @@ end
 -- global table
 
 mobs = {
-	mod = "redo", version = "20251011",
+	mod = "redo", version = "20251205",
 	spawning_mobs = {}, translate = S,
 	node_snow = has(core.registered_aliases["mapgen_snow"])
 			or has("mcl_core:snow") or has("default:snow") or "air",
@@ -2321,9 +2321,13 @@ function mob_class:do_states(dtime)
 
 				self:set_velocity(0)
 
-				if self.timer > 1 then
+				self.punch_timer = (self.punch_timer or 0) + dtime
 
-					self.timer = 0
+				if self.punch_timer >= self.punch_interval then
+
+					self.punch_timer = 0
+
+--					self.timer = 0
 
 					-- no custom attack or custom attack returns true to continue
 					if not self.custom_attack or self:custom_attack(self, p) then
@@ -2386,7 +2390,7 @@ function mob_class:do_states(dtime)
 					local amount = (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z) ^ 0.5
 
 					-- check for arrow custom override
-					if self.arrow_override then self.arrow_override(ent) end
+					if self.arrow_override then self.arrow_override(ent, self) end
 
 					local v = ent.velocity or 1 -- or set to default
 
@@ -3316,6 +3320,7 @@ function mobs:register_mob(name, def)
 		randomly_turn = def.randomly_turn ~= false,
 		ignore_invisibility = def.ignore_invisibility,
 		messages = def.messages,
+		punch_interval = def.punch_interval or 1,
 
 		on_rightclick = def.on_rightclick,
 		on_die = def.on_die,
@@ -3947,7 +3952,7 @@ end
 -- * spawn_egg=1: generic mob, no metadata
 -- * spawn_egg=2: captured/tamed mob, metadata
 
-function mobs:register_egg(mob, desc, background, addegg, no_creative)
+function mobs:register_egg(mob, desc, background, addegg, no_creative, can_spawn_protect)
 
 	local grp = {spawn_egg = 1}
 
@@ -3957,7 +3962,8 @@ function mobs:register_egg(mob, desc, background, addegg, no_creative)
 	local invimg = background
 
 	if addegg == 1 then
-		invimg = "mobs_chicken_egg.png^(" .. invimg .. "^[mask:mobs_chicken_egg_overlay.png)"
+		invimg = "mobs_chicken_egg.png^(" .. invimg
+				.. "^[mask:mobs_chicken_egg_overlay.png)"
 	end
 
 	-- does mob/entity exist
@@ -3996,7 +4002,13 @@ function mobs:register_egg(mob, desc, background, addegg, no_creative)
 							pointed_thing.under, under, placer, itemstack, pointed_thing)
 				end
 
-				if pos and not core.is_protected(pos, placer:get_player_name()) then
+				if pos then
+
+					-- can i spawn in protected areas?
+					if not can_spawn_protect
+					and core.is_protected(pos, placer:get_player_name()) then
+						return
+					end
 
 					if at_limit() then -- have we reached active mob limit
 
@@ -4009,6 +4021,7 @@ function mobs:register_egg(mob, desc, background, addegg, no_creative)
 
 					pos.y = pos.y + _y
 
+					-- copy egg data back into mob
 					local data = itemstack:get_metadata()
 					local smob = core.add_entity(pos, mob, data)
 					local ent = smob and smob:get_luaentity()
@@ -4049,7 +4062,13 @@ function mobs:register_egg(mob, desc, background, addegg, no_creative)
 						pointed_thing.under, under, placer, itemstack, pointed_thing)
 			end
 
-			if pos and not core.is_protected(pos, placer:get_player_name()) then
+			if pos then
+
+				-- can i spawn in protected areas?
+				if not can_spawn_protect
+				and core.is_protected(pos, placer:get_player_name()) then
+					return
+				end
 
 				if at_limit() then -- have we reached active mob limit
 

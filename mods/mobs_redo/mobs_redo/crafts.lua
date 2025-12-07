@@ -207,7 +207,14 @@ core.register_node("mobs:mob_repellent", {
 	tiles = {"mobs_repellent.png"},
 	is_ground_content = false,
 	groups = {handy = 1, cracky = 3},
-	sounds = mobs.node_sound_stone_defaults()
+	sounds = mobs.node_sound_stone_defaults(),
+	on_punch = function(pos, node, player, pointed_thing)
+
+		if minetest.get_modpath("vizlib") and player
+		and player:get_wielded_item():get_name() == "" then
+			vizlib.draw_cube(pos, 16.5, {color = "#6f1a1a", player = player})
+		end
+	end
 })
 
 core.register_craft({
