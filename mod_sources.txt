@@ -1,6 +1,6 @@
 
 origin https://github.com/minetest-mirrors/ambience.git (fetch)
-* f971ba562f7bf1aae4c3648e12b8e78ac0cb0999 fix beach sound check
+* bc5d9367bb628187df9d8a2bd8cd7b427f6aa65f add big splash effect when jumping in water
 Mod: ambience/ambience
 
 origin https://github.com/minetest-mods/lightning (fetch)
@@ -88,11 +88,11 @@ origin https://github.com/minetest-mods/ts_furniture (fetch)
 Mod: decor/ts_furniture
 
 origin https://github.com/mt-mods/unifieddyes (fetch)
-* 73c80155f81f121aafbf6ba6c35c1f7b88df6d90 Add support for brown and pink to `get_color_from_dye_name` (#26)
+* 52f18389b8cf1ae36df281e4a4938fdfa3092213 Clear existing/conflicting dye recipes (#27)
 Mod: decor/unifieddyes
 
 origin https://github.com/minetest-mirrors/farming.git (fetch)
-* 088143a3610fc3e1644fce528768ce54469402d2 Fix some light levels
+* 9cb83d03b59138a7933d79073ca0f26402bf6a87 have scythe pick up items
 Mod: flora_ores/farming
 
 origin https://codeberg.org/Dacmot/YellowCrystals.git (fetch)
@@ -176,7 +176,7 @@ origin https://codeberg.org/Dacmot/minetest_mapgen_config.git (fetch)
 Mod: mapgen/minetest_mapgen_config
 
 origin https://github.com/minetest-mirrors/pbj_pup.git (fetch)
-* 6026949b724b61822955f23767e94b9b1ae70328 change minetest. to core.
+* 4044527c80552ca9b9f4c70157730ab8682c4f3e tweak light levels and tidy code
 Mod: mapgen/pbj_pup
 
 origin https://github.com/GreenXenith/tac_nayn (fetch)
@@ -204,7 +204,7 @@ origin https://github.com/minetest-mirrors/mobs_redo.git (fetch)
 Mod: mobs_redo/mobs_redo
 
 origin https://github.com/minetest-mods/3d_armor (fetch)
-* 063505f9ea6f396da3b8084d0c96377d7a11b35b Update integration test to 5.4.0
+* baa16e28cb30ad7eaa1acf94a4e6209e3773e1fa Remove 'default dependency
 Mod: player/3d_armor
 
 origin https://gitlab.com/dacmot/awards.git (fetch)
@@ -304,7 +304,7 @@ origin https://github.com/APercy/hidroplane.git (fetch)
 Mod: tools/hidroplane
 
 origin https://github.com/minetest-mods/hopper (fetch)
-* 24bd52dbabea74583447a96ce9a5db6ac85ded0f Make hoppers craftable for mcl
+* 0847c39535a05097fc94af168406d5acff823e81 Fix mcl_chests compatilibity
 Mod: tools/hopper
 
 origin https://github.com/minetest-mods/jumping (fetch)
@@ -332,7 +332,7 @@ origin https://github.com/minetest-mods/subspacewalker (fetch)
 Mod: tools/subspacewalker
 
 origin https://github.com/APercy/supercub.git (fetch)
-* d5884cb50f72b8f3a713b95d8e741c8579d3a865 improved model
+* cfed37b7a08d5a5c17178b2033b3a6e567ba85a0 fix fuel indicator
 Mod: tools/supercub
 
 origin https://github.com/lisacvuk/minetest-toolranks (fetch)
