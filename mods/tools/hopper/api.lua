@@ -148,6 +148,14 @@ if core.get_modpath("default") then
 	add_furnace("default:furnace_active")
 end
 
+local function add_mcl_chest(nodename)
+	hopper:add_container({
+		{"top",    nodename, "input"},
+		{"bottom", nodename, "input"},
+		{"side",   nodename, "input"},
+	})
+end
+
 -- VoxeLibre, Mineclonia
 if core.get_modpath("mcl_init") then
 	add_furnace("mcl_furnaces:furnace")
@@ -155,9 +163,9 @@ if core.get_modpath("mcl_init") then
 	add_furnace("mcl_blast_furnace:blast_furnace")
 	add_furnace("mcl_blast_furnace:blast_furnace_active")
 
-	add_furnace("mcl_chests:chest_small")
-	add_furnace("mcl_chests:chest_left")
-	add_furnace("mcl_chests:chest_right")
+	add_mcl_chest("mcl_chests:chest_small")
+	add_mcl_chest("mcl_chests:chest_left")
+	add_mcl_chest("mcl_chests:chest_right")
 end
 
 -- protector redo mod support
