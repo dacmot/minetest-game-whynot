@@ -322,15 +322,15 @@ core.register_craftitem("farming:hoe_bomb", {
 			hoe_area(pointed_thing.under, user)
 		else
 			throw_potion(itemstack, user)
-
-			if not farming.is_creative(user:get_player_name()) then
-
-				itemstack:take_item()
-
-				return itemstack
-			end
 		end
-	end,
+
+		if not farming.is_creative(user:get_player_name()) then
+
+			itemstack:take_item()
+
+			return itemstack
+		end
+	end
 })
 
 -- helper function
@@ -363,6 +363,12 @@ core.register_tool("farming:scythe_mithril", {
 	sound = {breaks = "default_tool_breaks"},
 
 	on_use = function(itemstack, placer, pointed_thing)
+
+		-- if punching entity/object
+		if pointed_thing.type == "object" then
+			pointed_thing.ref:punch(placer, 1, {full_punch_interval = 1.0})
+			return itemstack
+		end
 
 		if pointed_thing.type ~= "node" then return end
 
