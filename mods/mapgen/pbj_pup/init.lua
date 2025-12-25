@@ -3,7 +3,8 @@
 
 local def = core.get_modpath("default")
 local mcl = core.get_modpath("mcl_core")
-local snd = mcl and mcl_sounds.node_sound_glass_defaults() or default.node_sound_glass_defaults()
+local snd = mcl and mcl_sounds.node_sound_glass_defaults() or
+		default.node_sound_glass_defaults()
 
 -- PB&J Pup node
 
@@ -14,7 +15,7 @@ core.register_node("pbj_pup:pbj_pup", {
 		"pbj_pup_sides.png", "pbj_pup_back.png", "pbj_pup_front.png"
 	},
 	paramtype = "light",
-	light_source = 15,
+	light_source = 14,
 	paramtype2 = "facedir",
 	groups = {cracky = 2, handy = 1},
 	is_ground_content = false,
@@ -31,7 +32,7 @@ core.register_node(":nyancat:nyancat", {
 		"nyancat_side.png", "nyancat_back.png", "nyancat_front.png"
 	},
 	paramtype = "light",
-	light_source = 15,
+	light_source = 14,
 	paramtype2 = "facedir",
 	groups = {cracky = 2, handy = 1},
 	is_ground_content = false,
@@ -48,7 +49,7 @@ core.register_node(":moognu:moognu", {
 		"moognu_side.png", "moognu_back.png", "moognu_front.png"
 	},
 	paramtype = "light",
-	light_source = 15,
+	light_source = 14,
 	paramtype2 = "facedir",
 	groups = {cracky = 2, handy = 1},
 	is_ground_content = false,
@@ -76,29 +77,10 @@ core.register_node(":nyancat:nyancat_rainbow", {
 
 -- Fuels
 
-core.register_craft({
-	type = "fuel",
-	recipe = "pbj_pup:pbj_pup",
-	burntime = 10
-})
-
-core.register_craft({
-	type = "fuel",
-	recipe = "nyancat:nyancat",
-	burntime = 10
-})
-
-core.register_craft({
-	type = "fuel",
-	recipe = "moognu:moognu",
-	burntime = 10
-})
-
-core.register_craft({
-	type = "fuel",
-	recipe = "nyancat:nyancat_rainbow",
-	burntime = 10
-})
+core.register_craft({type = "fuel", recipe = "pbj_pup:pbj_pup", burntime = 10})
+core.register_craft({type = "fuel", recipe = "nyancat:nyancat", burntime = 10})
+core.register_craft({type = "fuel", recipe = "moognu:moognu", burntime = 10})
+core.register_craft({type = "fuel", recipe = "nyancat:nyancat_rainbow", burntime = 10})
 
 -- helper function to place Nyan/Pup/Moo with rainbow tail
 
