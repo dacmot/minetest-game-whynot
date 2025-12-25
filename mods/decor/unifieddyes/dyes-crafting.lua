@@ -208,6 +208,16 @@ for _,i in ipairs(unifieddyes.base_color_crafts) do
 	local color = i[1]
 	local yield = i[7]
 
+	minetest.clear_craft( {
+		type = "shapeless",
+		recipe = {
+			i[2],
+			i[3],
+			i[4],
+			i[5],
+			i[6],
+		},
+	})
 	minetest.register_craft( {
 		type = "shapeless",
 		output = "dye:"..color.." "..yield,
@@ -228,6 +238,15 @@ for _,i in ipairs(unifieddyes.base_color_crafts) do
 
 		if color ~= "black" and color ~= "white" and not string.find(color, "grey") then
 
+			minetest.clear_craft( {
+				type = "shapeless",
+				recipe = {
+					"dye:"..color,
+					firstdye,
+					j[4],
+					j[5]
+				},
+			})
 			minetest.register_craft( {
 				type = "shapeless",
 				output = "dye:"..j[1]..color..j[2].." "..j[6],
