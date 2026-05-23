@@ -615,7 +615,8 @@ This function registers a arrow for mobs with the attack type shoot.
        'hit_object'   a function that is called when the arrow hits an object;
                       this function parameters are (self, player)
        'hit_node'     a function that is called when the arrow hits a node, the
-                      parameters are (self, pos, node)
+                      parameters are (self, pos, node), pos is the arrow position
+                      and self.node_pos is the node position it hit.
        'tail'         when set to 1 adds a trail or tail to mob arrows
        'tail_texture' texture string used for above effect
        'tail_size'    has size for above texture (defaults to between 5 and 10)
