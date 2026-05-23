@@ -659,6 +659,7 @@ minetest.register_entity(":__builtin:item", item)
 -- Track a player's wielded item
 wielded_light.register_player_lightstep(function (player)
 	wielded_light.track_user_entity(player, "wield", player:get_wielded_item():get_name())
+	wielded_light.track_user_entity(player, "offhand", player:get_inventory():get_stack("offhand", 1):get_name())
 end)
 
 -- Register helper nodes
