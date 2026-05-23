@@ -39,22 +39,35 @@ local deco = {}
 
 local function particle_effect(pos)
 
-	core.add_particlespawner({
+	local def = {
 		amount = 4,
 		time = 0.15,
 		minpos = pos,
 		maxpos = pos,
-		minvel = {x = -1, y = 2, z = -1},
-		maxvel = {x = 1, y = 4, z = 1},
+		minvel = {x = -0.5, y = 1, z = -0.5},
+		maxvel = {x = 0.5, y = 2, z = 0.5},
 		minacc = {x = -1, y = -1, z = -1},
 		maxacc = {x = 1, y = 1, z = 1},
 		minexptime = 1,
 		maxexptime = 1,
-		minsize = 1,
+		minsize = 1.5,
 		maxsize = 3,
 		texture = "bonemeal_particle.png",
 		glow = 5
-	})
+	}
+
+	if core.features.particlespawner_tweenable then
+		def.texture = "bonemeal_particle_animated.png"
+		def.animation = {
+			type = 'vertical_frames', aspect_w = 8, aspect_h = 8, length = 0.5
+		}
+	end
+
+	core.add_particlespawner(def)
+end
+
+local function sfx(pos)
+	core.sound_play("bonemeal_chime", {pos = pos, max_hear_distance = 5}, true)
 end
 
 -- tree type check
@@ -109,7 +122,7 @@ local function check_sapling(pos, sapling_node, strength, light_ok)
 			-- check if we can grow sapling at current light level
 			if can_grow and (light_ok or saplings[n][4]) then
 
-				particle_effect(pos)
+				particle_effect(pos) ; sfx(pos)
 
 				if math.random(5 - strength) == 1 then
 					grow_tree(pos, saplings[n][2])
@@ -125,8 +138,29 @@ end
 
 local function check_crops(pos, nodename, strength, light_ok)
 
-	-- grow registered crops
-	for n = 1, #crops do
+	local def = core.registered_nodes[nodename] ; if not def then return end
+
+	-- check if crop has next_plant and enough light
+	if def and def.next_plant and light_ok then
+
+		for g = 1, strength do
+
+			def = core.registered_nodes[core.get_node(pos).name]
+
+			local next_node = def and def.next_plant
+
+			if next_node then
+
+				core.set_node(pos, {name = next_node, param2 = def.place_param2})
+
+				particle_effect(pos)
+			end
+		end
+
+		sfx(pos) ; return true
+	end
+
+	for n = 1, #crops do -- loop through registered crops
 
 		-- check if crop can grow in current light level
 		-- [1] = crop, [2] = stages, [3] = seed, [4] = can grow in dark
@@ -140,16 +174,13 @@ local function check_crops(pos, nodename, strength, light_ok)
 
 			if next_nodename == nodename then return end
 
-			local node_def = core.registered_nodes[next_nodename]
+			def = core.registered_nodes[next_nodename]
 
-			if not node_def then return end
+			if not def then return end
 
-			core.set_node(pos,
-					{name = next_nodename, param2 = node_def.place_param2 or 0})
+			core.set_node(pos, {name = next_nodename, param2 = def.place_param2})
 
-			particle_effect(pos)
-
-			core.get_node_timer(pos):start(10)
+			particle_effect(pos) ; sfx(pos)
 
 			return true
 		end
@@ -208,6 +239,7 @@ local function check_soil(pos, nodename, strength)
 			particle_effect(p)
 		end
 	end
+	sfx(pos)
 end
 
 -- helper function
@@ -359,19 +391,19 @@ function bonemeal:on_use(pos, strength, node)
 
 		default.grow_papyrus(pos, node)
 
-		particle_effect(pos) ; return true
+		particle_effect(pos) ; sfx(pos) ; return true
 
 	elseif node.name == "default:cactus" then
 
 		default.grow_cactus(pos, node)
 
-		particle_effect(pos) ; return true
+		particle_effect(pos) ; sfx(pos) ; return true
 
 	elseif node.name == "default:dry_dirt" and strength == 1 then
 
 		core.set_node(pos, {name = "default:dry_dirt_with_dry_grass"})
 
-		particle_effect(pos) ; return true
+		particle_effect(pos) ; sfx(pos) ; return true
 	end
 
 	-- grow grass and flowers
