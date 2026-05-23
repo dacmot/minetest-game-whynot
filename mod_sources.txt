@@ -1,6 +1,6 @@
 
 origin https://github.com/minetest-mirrors/ambience.git (fetch)
-* 48a2e0ace443d010e59f90e4125703b7e0ef7917 wee tidy
+* d0b12b1cce4823da66282ebc623c233885332248 add 1 in 2 chance of seagull in beach set
 Mod: ambience/ambience
 
 origin https://github.com/minetest-mods/lightning (fetch)
@@ -52,7 +52,7 @@ origin https://github.com/mt-mods/homedecor_modpack (fetch)
 Mod: decor/homedecor_modpack
 
 origin https://github.com/MoNTE48/laptop (fetch)
-* 2929bbda89b66d3d7a0f7171c6cdd307b8a95f8d Fix inventory size
+* f9fa4023d3d4734ec25befeb28f2b7e5ab7443b1 Add `nil` check
 Mod: decor/laptop
 
 origin https://repo.or.cz/minetest_mtg_plus.git (fetch)
@@ -92,7 +92,7 @@ origin https://github.com/mt-mods/unifieddyes (fetch)
 Mod: decor/unifieddyes
 
 origin https://github.com/minetest-mirrors/farming.git (fetch)
-* e102dd773ab103c5950f882c42856364fbdd710b kiwi sorbet texture
+* 647813751316773974d7cad15ba238f65369c547 make sure grass doesnt drop disabled seeds
 Mod: flora_ores/farming
 
 origin https://codeberg.org/Dacmot/YellowCrystals.git (fetch)
@@ -196,15 +196,15 @@ origin https://codeberg.org/tenplus1/mobs_ghost_redo (fetch)
 Mod: mobs_redo/mobs_ghost_redo
 
 origin https://github.com/minetest-mirrors/mobs_monster.git (fetch)
-* a55ec52e1609a8d530acccef7297afbbc8d5d839 remove cobweb arrow tail
+* baabd42805da2e6ddede1c4c48dc14bfac132163 tweak fireball
 Mod: mobs_redo/mobs_monster
 
 origin https://github.com/minetest-mirrors/mobs_redo.git (fetch)
-* 1aa724afafaadd795813afa4244f03004b8b40ed tweak find_free_pos and spawner abm
+* f47c6cb0d872583119d6df1e7a53b04ad439668d tweaky tweaks
 Mod: mobs_redo/mobs_redo
 
 origin https://github.com/minetest-mods/3d_armor (fetch)
-* baa16e28cb30ad7eaa1acf94a4e6209e3773e1fa Remove 'default dependency
+* 398f60cc5e69837f8f148105cced2c15a6aa6c0e Ability to use empty textures (#175)
 Mod: player/3d_armor
 
 origin https://gitlab.com/dacmot/awards.git (fetch)
@@ -252,7 +252,7 @@ origin https://repo.or.cz/minetest_show_wielded_item.git (fetch)
 Mod: player/show_wielded_item
 
 origin https://github.com/minetest-mods/skinsdb (fetch)
-* 139cf48fa1c28f52145861d46594fab5eed8bc52 Reduce environment attack surface
+* 1984bc2dd554a019e3960adfed295b3907d13d73 Replace insecure env for downloading skins with dynamic media (#117)
 Mod: player/skinsdb
 
 origin https://github.com/bell07/minetest-smart_sfinv (fetch)
@@ -260,7 +260,7 @@ origin https://github.com/bell07/minetest-smart_sfinv (fetch)
 Mod: player/smart_sfinv_modpack
 
 origin https://github.com/minetest-mods/wielded_light (fetch)
-* eaa06a3a29aa6cefa5869ac7be885cc95399bb91 Fix error caused by floating-point light levels
+* 2798e8ed4215dfd551d3e4fef4244cb6221d4e5c Add support for "offhand" inventory list (#34)
 Mod: player/wielded_light
 
 origin https://codeberg.org/minenux/minetest-mod-backpacks.git (fetch)
@@ -272,7 +272,7 @@ origin https://github.com/Lokrates/Biofuel.git (fetch)
 Mod: tools/biofuel
 
 origin https://github.com/minetest-mirrors/bonemeal.git (fetch)
-* 1b4b7ffb10ba6a7e76480ff48ab8d9f1647993bd fix nil checks, tweak deco addition to existing
+* 8294853f9aa69ce4455b80ee533a5cac05983abf tidy check_crop
 Mod: tools/bonemeal
 
 origin https://github.com/SmallJoker/boost_cart (fetch)
