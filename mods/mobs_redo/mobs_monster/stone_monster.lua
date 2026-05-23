@@ -94,7 +94,7 @@ mobs:register_mob("mobs_monster:stone_monster", {
 
 				if tmp.drops then self.drops = tmp.drops end
 
-				return true
+				break
 			end
 		end
 

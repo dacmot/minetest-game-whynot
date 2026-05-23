@@ -94,7 +94,7 @@ mobs:register_mob("mobs_monster:land_guard", {
 
 				if tmp.drops then self.drops = tmp.drops end
 
-				return true
+				break
 			end
 		end
 

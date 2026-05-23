@@ -143,7 +143,7 @@ mobs:register_mob("mobs_monster:tree_monster", {
 					}
 				end
 
-				return true
+				break
 			end
 		end
 

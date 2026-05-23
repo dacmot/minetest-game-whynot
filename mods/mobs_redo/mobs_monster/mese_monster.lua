@@ -289,18 +289,14 @@ mobs:register_arrow("mobs_monster:mese_arrow", {
 
 	hit_player = function(self, player)
 
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = self.damage}
-		}, nil)
+		player:punch(self.object, 1.0,
+				{full_punch_interval = 1.0, damage_groups = {fleshy = self.damage}}, nil)
 	end,
 
 	hit_mob = function(self, player)
 
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = self.damage}
-		}, nil)
+		player:punch(self.object, 1.0,
+				{full_punch_interval = 1.0, damage_groups = {fleshy = self.damage}}, nil)
 	end,
 
 	hit_node = function(self, pos, node)

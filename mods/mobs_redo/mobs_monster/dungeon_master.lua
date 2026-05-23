@@ -28,7 +28,7 @@ mobs:register_mob("mobs_monster:dungeon_master", {
 	shoot_interval = 2.2,
 	arrow = "mobs_monster:fireball",
 	friendly_fire = false,
-	shoot_offset = 1,
+	shoot_offset = 1.4,
 	hp_min = 42,
 	hp_max = 75,
 	armor = 60,
@@ -84,9 +84,7 @@ mobs:register_mob("mobs_monster:dungeon_master", {
 				self.base_texture = tmp.skins
 				self.object:set_properties({textures = tmp.skins})
 
-				if tmp.drops then self.drops = tmp.drops end
-
-				return true
+				break
 			end
 		end
 
@@ -123,7 +121,7 @@ mobs:register_arrow("mobs_monster:fireball", {
 	visual = "sprite",
 	visual_size = {x = 1, y = 1},
 	textures = {"mobs_fireball.png"},
-	collisionbox = {-0.1, -0.1, -0.1, 0.1, 0.1, 0.1},
+	collisionbox = {-0.3, -0.3, -0.3, 0.3, 0.3, 0.3},
 	velocity = 7,
 	tail = 1,
 	tail_texture = "mobs_fireball.png",
@@ -142,7 +140,7 @@ mobs:register_arrow("mobs_monster:fireball", {
 		if hitter and hitter:is_player() and tool_capabilities and dir then
 
 			local damage = tool_capabilities.damage_groups and
-				tool_capabilities.damage_groups.fleshy or 1
+					tool_capabilities.damage_groups.fleshy or 1
 
 			local tmp = tflp / (tool_capabilities.full_punch_interval or 1.4)
 
@@ -160,22 +158,18 @@ mobs:register_arrow("mobs_monster:fireball", {
 	-- direct hit, no fire... just plenty of pain
 	hit_player = function(self, player)
 
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 8}
-		}, nil)
+		player:punch(self.object, 1.0,
+				{full_punch_interval = 1.0, damage_groups = {fleshy = 8}}, nil)
 	end,
 
 	hit_mob = function(self, player)
 
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 1.0,
-			damage_groups = {fleshy = 8}
-		}, nil)
+		player:punch(self.object, 1.0,
+				{full_punch_interval = 1.0, damage_groups = {fleshy = 8}}, nil)
 	end,
 
 	hit_object = function(self, player)
-		mobs:explosion(self.object:get_pos(), 2, 1, 0)
+		mobs:boom(self, pos, 2)
 	end,
 
 	-- node hit

@@ -1,40 +1,24 @@
 
 local S = core.get_translator("mobs_monster")
 
--- helper function
-
-local function get_velocity(self)
-
-	local v = self.object:get_velocity()
-
-	if not v then return 0 end -- sanity check
-
-	return (v.x * v.x + v.z * v.z) ^ 0.5
-end
-
-local math_cos, math_sin = math.cos, math.sin
-
 -- custom spider types
 
 local spider_types = {
 
 	{	nodes = {"default:snow", "default:snowblock", "default:dirt_with_snow"},
 		skins = {"mobs_spider_snowy.png"},
-		docile = true,
-		drops = nil
+		docile = true
 	},
 
 	{	nodes = {"default:dirt_with_rainforest_litter", "default:jungletree"},
 		skins = {"mobs_spider_orange.png"},
 		docile = true,
-		drops = nil,
 		shoot = true
 	},
 
 	{	nodes = {"default:stone", "default:gravel"},
 		skins = {"mobs_spider_grey.png"},
 		docile = nil,
-		drops = nil,
 		small = true
 	},
 
@@ -58,7 +42,6 @@ local spider_types = {
 			"ethereal:gray_dirt"},
 		skins = {"mobs_spider_dark.png"},
 		docile = nil,
-		drops = nil,
 		shoot = true
 	}
 }
@@ -154,7 +137,7 @@ mobs:register_mob("mobs_monster:spider", {
 					})
 				end
 
-				return true
+				break
 			end
 		end
 
@@ -288,7 +271,7 @@ core.register_craft({
 
 -- cobweb place function
 
-local web_place = function(pos)
+local function web_place(pos)
 
 	if core.find_node_near(pos, 1, {"ignore"}) then return end
 
@@ -312,10 +295,8 @@ mobs:register_arrow("mobs_monster:cobweb", {
 
 	hit_player = function(self, player)
 
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 2.0,
-			damage_groups = {fleshy = 3}
-		}, nil)
+		player:punch(self.object, 1.0,
+				{full_punch_interval = 2.0, damage_groups = {fleshy = 3}}, nil)
 
 		web_place(self.object:get_pos())
 	end,
@@ -326,9 +307,7 @@ mobs:register_arrow("mobs_monster:cobweb", {
 
 	hit_mob = function(self, player)
 
-		player:punch(self.object, 1.0, {
-			full_punch_interval = 2.0,
-			damage_groups = {fleshy = 3}
-		}, nil)
+		player:punch(self.object, 1.0,
+				{full_punch_interval = 2.0, damage_groups = {fleshy = 3}}, nil)
 	end
 })
