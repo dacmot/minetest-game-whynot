@@ -226,11 +226,11 @@ ambience.add_set("beach", {
 	frequency = 40,
 
 	sounds = {
-		{name = "seagull", length = 4.5, ephemeral = true},
-		{name = "seagull", length = 4.5, pitch = 1.2, ephemeral = true},
+		{name = "seagull", length = 4.5, chance = 2, ephemeral = true},
+		{name = "seagull", length = 4.5, pitch = 1.2, chance = 2, ephemeral = true},
 		--{name = "beach", length = 13},
-		{name = "gull", length = 1, ephemeral = true},
-		{name = "seagull_2", length = 4, ephemeral = true}
+		{name = "gull", length = 1, chance = 2, ephemeral = true},
+		{name = "seagull_2", length = 4, chance = 2, ephemeral = true}
 	},
 
 	nodes = {"group:water"},
@@ -240,7 +240,7 @@ ambience.add_set("beach", {
 		local c = (def.totals["default:water_source"] or 0)
 			+ (def.totals["mcl_core:water_source"] or 0)
 
-		if def.pos.y > water_level - 1 and def.pos.y < water_level + 5 and c > 100 then
+		if def.pos.y > water_level - 1 and def.pos.y < water_level + 4 and c > 100 then
 			return "beach"
 		end
 	end
