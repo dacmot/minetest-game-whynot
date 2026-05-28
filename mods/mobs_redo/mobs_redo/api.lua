@@ -17,7 +17,7 @@ end
 -- global table
 
 mobs = {
-	mod = "redo", version = "20260518",
+	mod = "redo", version = "20260523",
 	spawning_mobs = {}, translate = S,
 	node_snow = has(core.registered_aliases["mapgen_snow"])
 			or has("mcl_core:snow") or has("default:snow") or "air",
@@ -1346,31 +1346,28 @@ function mob_class:replace(pos)
 			{x = pos.x - reach, y = pos.y, z = pos.z - reach},
 			{x = pos.x + reach, y = pos.y, z = pos.z + reach}, what)
 
-	if #found > 0 then
+	if #found == 0 then return end
 
-		pos = found[random(#found)]
+	pos = found[random(#found)]
 
 -- print("replace node = ".. core.get_node(pos).name, pos.y)
 
-		if self.on_replace then
+	if self.on_replace then
 
-			local oldnode = what or ""
-			local newnode = with
+		local oldnode = what or ""
+		local newnode = with
 
-			-- pass node name when using table or groups
-			if type(oldnode) == "table" or oldnode:find("group:") then
-				oldnode = get_node(pos).name
-			end
-
-			if self.on_replace and self:on_replace(pos, oldnode, newnode) == false then
-				return
-			end
+		-- pass node name when using table or groups
+		if type(oldnode) == "table" or oldnode:find("group:") then
+			oldnode = get_node(pos).name
 		end
 
-		core.set_node(pos, {name = with})
-
-		self:mob_sound(self.sounds.replace)
+		if self:on_replace(pos, oldnode, newnode) == false then return end
 	end
+
+	core.set_node(pos, {name = with})
+
+	self:mob_sound(self.sounds.replace)
 end
 
 -- look directly around mob to see if it can pickup any dropped items
