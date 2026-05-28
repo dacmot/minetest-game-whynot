@@ -200,7 +200,7 @@ origin https://github.com/minetest-mirrors/mobs_monster.git (fetch)
 Mod: mobs_redo/mobs_monster
 
 origin https://github.com/minetest-mirrors/mobs_redo.git (fetch)
-* f47c6cb0d872583119d6df1e7a53b04ad439668d tweaky tweaks
+* bfae013a9a73c10958e0ca0f82413432eb9bf8c6 on_replace early return
 Mod: mobs_redo/mobs_redo
 
 origin https://github.com/minetest-mods/3d_armor (fetch)
