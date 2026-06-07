@@ -76,7 +76,7 @@
 	url = https://github.com/minetest-mirrors/pie.git
 [submodule "builder/mods_src/food/waffles"]
 	path = builder/mods_src/food/waffles
-	url = https://github.com/GreenXenith/waffles
+	url = https://codeberg.org/Dacmot/waffles.git
 [submodule "builder/mods_src/libs/doc"]
 	path = builder/mods_src/libs/doc
 	url = https://repo.or.cz/minetest_doc.git
