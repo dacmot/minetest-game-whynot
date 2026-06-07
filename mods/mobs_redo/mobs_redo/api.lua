@@ -17,7 +17,7 @@ end
 -- global table
 
 mobs = {
-	mod = "redo", version = "20260523",
+	mod = "redo", version = "20260605",
 	spawning_mobs = {}, translate = S,
 	node_snow = has(core.registered_aliases["mapgen_snow"])
 			or has("mcl_core:snow") or has("default:snow") or "air",
@@ -141,7 +141,7 @@ mobs.mob_class = {
 	walk_chance = 50,
 	stand_chance = 30,
 	attack_chance = 5,
-	attack_patience = 11,
+	attack_patience = 18,
 	passive = false,
 	blood_amount = 5, blood_texture = "mobs_blood.png",
 	shoot_offset = 0,
@@ -365,15 +365,26 @@ function mob_class:get_velocity()
 	return (v.x * v.x + v.z * v.z) ^ 0.5
 end
 
+-- helper function for smooth rotation
+
+local function shortest_rotation(from, to)
+
+	local diff = to - from
+
+	if diff > pi then return diff - 2 * pi
+	elseif diff < -pi then return diff + 2 * pi
+	end
+
+	return diff
+end
+
 -- set and return valid yaw, pitch or roll
 
 function mob_class:set_yaw(yaw, delay)
 
-	yaw = yaw or 0
+	yaw = (yaw or 0) % (2 * pi) -- clamp yaw
 
-	delay = mob_smooth_rotate and delay or 0
-
-	yaw = yaw % (2 * pi) -- simplified yaw clamp
+	delay = (mob_smooth_rotate and delay) or 0
 
 	if delay == 0 then
 
@@ -725,11 +736,12 @@ function mob_class:item_drop()
 
 			-- only drop rare items (drops.min = 0) if killed by player
 			if death_by_player or self.drops[n].min ~= 0 then
-				obj = core.add_item(pos, ItemStack(item .. " " .. num))
-			end
 
-			if obj and obj:get_luaentity() then
-				obj:set_velocity({x = random() - 0.5, y = 4, z = random() - 0.5})
+				obj = core.add_item(pos, ItemStack(item .. " " .. num))
+
+				if obj then
+					obj:set_velocity({x = random() - 0.5, y = 4, z = random() - 0.5})
+				end
 			end
 		end
 	end
@@ -1428,9 +1440,96 @@ local function can_dig_drop(pos)
 	return true
 end
 
--- pathfinder mod check
+-- process found path (nil if not found) way leading to target_pos
+-- if add_jump is true, add jump if below target_pos
+-- if set_velocity is true and path found, start moving at self.walk_velocity
 
-local pathfinder_mod = core.get_modpath("pathfinder")
+function mob_class:apply_path(way, target_pos, add_jump, set_velocity)
+
+	local s = self.object:get_pos() ; if not s or not target_pos then return end
+
+	self.path.way = way
+
+	if self.attack then self:do_attack(self.attack) end
+
+	if not self.path.way then -- no path found
+
+		self.path.following = false
+
+		 -- lets make a way by digging/building
+		if self.pathfinding == 2 and mobs_griefing then
+
+			local prop = self.object:get_properties()
+			local height_diff = target_pos.y - s.y
+
+			-- is player more than 1 block higher than mob?
+			if height_diff > 1.1 then
+
+				if not core.is_protected(s, "") then -- build upwards
+
+					local ndef1 = core.registered_nodes[self.standing_in]
+
+					if ndef1 and (ndef1.buildable_to or ndef1.groups.liquid) then
+
+						s.y = s.y + (prop.collisionbox[2] + 0.25)
+
+						core.set_node(s, {name = mobs.fallback_node})
+					end
+				end
+
+				-- can we dig block above head so we can jump
+				can_dig_drop({x = s.x, y = s.y + ceil(prop.collisionbox[5]) + 1, z = s.z})
+
+				self.object:set_pos({x = s.x, y = s.y + 2, z = s.z})
+
+			elseif height_diff < -1.1 then -- is player move than 1 block lower
+
+				 -- try to dig down
+				can_dig_drop({x = s.x, y = s.y + (prop.collisionbox[2] - 0.25), z = s.z})
+
+			else -- dig 2 blocks to make door toward player direction
+
+				local yaw1 = self.object:get_yaw() + pi / 2
+				local p1 = {x = s.x + cos(yaw1), y = floor(s.y), z = s.z + sin(yaw1)}
+
+				-- dig bottom node first incase of door
+				can_dig_drop(p1) ; p1.y = p1.y + 1 ; can_dig_drop(p1)
+			end
+		end
+
+		-- will try again in 2 second
+		self.path.stuck_timer = pathfinding_stuck_timeout - 2
+
+	elseif add_jump and s.y < target_pos.y and not self.fly then
+
+		self:do_jump() --add jump to pathfinding
+		self.path.following = true
+
+	else -- yay i found path
+
+		self:mob_sound(self.attack and self.sounds.war_cry or self.sounds.random)
+
+		if set_velocity then
+			self:set_velocity(self.walk_velocity)
+		end
+
+		self.path.following = true -- now follow path
+	end
+end
+
+-- path height checker
+
+local function path_height_blocked(self)
+
+	local node
+
+	for _,pos in pairs(self.path.way) do
+
+		node = get_node({x = pos.x, y = pos.y + 1, z = pos.z}).name
+
+		if core.registered_nodes[node].walkable then return true end
+	end
+end
 
 -- path finding and smart mob routine by rnd, line_of_sight and other edits by Elkien3
 
@@ -1440,7 +1539,7 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 	local target_pos = p
 
 	-- are we stuck?
-	if abs(s1.x - s.x) + abs(s1.z - s.z) < .5 then
+	if (abs(s1.x - s.x) + abs(s1.z - s.z)) / dtime < 0.5 then
 		self.path.stuck_timer = self.path.stuck_timer + dtime
 	else
 		self.path.stuck_timer = 0
@@ -1448,184 +1547,83 @@ function mob_class:smart_mobs(s, p, dist, dtime)
 
 	self.path.lastpos = {x = s.x, y = s.y, z = s.z}
 
-	local use_pathfind = false
+	if self.path.stuck_timer <= pathfinding_stuck_timeout then return end
+
 	local has_lineofsight = core.line_of_sight(
-			{x = s.x, y = (s.y) + .5, z = s.z},
-			{x = target_pos.x, y = (target_pos.y) + 1.5, z = target_pos.z}, .2)
+			{x = s.x, y = s.y + 0.5, z = s.z},
+			{x = target_pos.x, y = target_pos.y + 1.5, z = target_pos.z}, .2)
 
-	-- im stuck, search for path
-	if not has_lineofsight then
+	self.path.stuck_timer = 0
 
-		if self.path.los_switcher then
-			use_pathfind = true ; self.path.los_switcher = false
-		end -- cannot see target!
-	else
-		if not self.path.los_switcher then
-
-			self.path.los_switcher = true ; use_pathfind = false
-
-			core.after(1, function(self)
-
-				if not self.object:get_luaentity() then return end
-
-				if has_lineofsight then self.path.following = false end
-			end, self)
-		end -- can see target!
-	end
-
-	if self.path.stuck_timer > pathfinding_stuck_timeout and not self.path.following then
-
-		use_pathfind = true
-		self.path.stuck_timer = 0
-
-		core.after(1, function(self)
-
-			if not self.object:get_luaentity() then return end
-
-			if has_lineofsight then self.path.following = false end
-		end, self)
-	end
-
-	if self.path.stuck_timer > pathfinding_stuck_path_timeout and self.path.following then
-
-		use_pathfind = true
-		self.path.stuck_timer = 0
-
-		core.after(1, function(self)
-
-			if not self.object:get_luaentity() then return end
-
-			if has_lineofsight then self.path.following = false end
-		end, self)
+	if has_lineofsight then
+		self.path.following = false ; return
 	end
 
 	local prop = self.object:get_properties()
 
-	if abs(s.y - target_pos.y) > prop.stepheight then
+	-- round position to avoid getting stuck in walls
+	local sx, sz = floor(s.x + 0.5), floor(s.z + 0.5)
 
-		if self.path.height_switcher then
-				use_pathfind = true ; self.path.height_switcher = false end
-	else
-		if not self.path.height_switcher then
-				use_pathfind = false ; self.path.height_switcher = true end
-	end
+	local ssight, sground = core.line_of_sight(s, {x = sx, y = s.y - 4, z = sz}, 1)
 
-	-- try to find a path
-	if use_pathfind then
+	-- determine node above ground (adjust height for player models)
+	if not ssight then s.y = sground.y + 1 end
 
-		-- round position to avoid getting stuck in walls
-		s.x = floor(s.x + 0.5) ; s.z = floor(s.z + 0.5)
+	local dropheight = self.fear_height ~= 0 and self.fear_height or pathfinding_max_drop
+	local jumpheight = 0
+	local prop = self.object:get_properties()
 
-		local ssight, sground = core.line_of_sight(s,
-				{x = s.x, y = s.y - 4, z = s.z}, 1)
+	if self.jump_height >= pathfinding_max_jump then
 
-		-- determine node above ground (adjust height for player models)
-		if not ssight then s.y = sground.y + 1 end
+		jumpheight = min(ceil(self.jump_height / pathfinding_max_jump), pathfinding_max_jump)
 
-		local p1 = {
-			x = floor(target_pos.x + 0.5),
-			y = floor(target_pos.y + 0.5),
-			z = floor(target_pos.z + 0.5)}
+	elseif prop.stepheight > 0.5 then jumpheight = 1 end
 
-		local dropheight = pathfinding_max_drop
+	local p1 = {
+		x = floor(target_pos.x + 0.5),
+		y = floor(target_pos.y + 0.5),
+		z = floor(target_pos.z + 0.5)}
 
-		if self.fear_height ~= 0 then dropheight = self.fear_height end
+	self.path.way = core.find_path(s, p1, pathfinding_searchdistance,
+			jumpheight, dropheight, pathfinding_algorithm)
 
-		local jumpheight = 0
+	local height = prop.collisionbox[5] - prop.collisionbox[2]
 
-		if self.jump_height >= pathfinding_max_jump then
+	-- since we have a path, double check clearance height for 2x node high mobs
+	if self.path.way and #self.path.way > 0 then
 
-			jumpheight = min(ceil(
-					self.jump_height / pathfinding_max_jump), pathfinding_max_jump)
-
-		elseif prop.stepheight > 0.5 then jumpheight = 1 end
-
-		if pathfinder_mod then
-			self.path.way = pathfinder.find_path(s, p1, self, dtime)
-		else
-			self.path.way = core.find_path(s, p1, pathfinding_searchdistance,
-					jumpheight, dropheight, pathfinding_algorithm)
-		end
-
-		--[[ show path using particles
-		if self.path.way and #self.path.way > 0 then
-
-			print("-- path length:" .. tonumber(#self.path.way))
-
-			for _,pos in pairs(self.path.way) do
-
-				core.add_particle({
-					pos = pos,
-					velocity = {x = 0, y = 0, z = 0},
-					acceleration = {x = 0, y = 0, z = 0},
-					expirationtime = 1,
-					size = 4,
-					collisiondetection = false,
-					vertical = false,
-					texture = "mobs_heart_particle.png",
-				})
+		if height > 1 then
+			if path_height_blocked(self) then -- make sure 2 high mobs can get access
+				self.path.way = nil
 			end
-		end]]
-
-		self.state = ""
-
-		if self.attack then self:do_attack(self.attack) end
-
-		if not self.path.way then -- no path found
-
-			self.path.following = false
-
-			 -- lets make a way by digging/building
-			if self.pathfinding == 2 and mobs_griefing then
-
-				-- is player more than 1 block higher than mob?
-				if p1.y > (s.y + 1) then
-
-					if not core.is_protected(s, "") then -- build upwards
-
-						local ndef1 = core.registered_nodes[self.standing_in]
-
-						if ndef1 and (ndef1.buildable_to or ndef1.groups.liquid) then
-							core.set_node(s, {name = mobs.fallback_node})
-						end
-					end
-
-					local sheight = ceil(prop.collisionbox[5]) + 1
-
-					-- can we dig block above head so we can jump
-					can_dig_drop({x = s.x, y = s.y + sheight, z = s.z})
-
-					self.object:set_pos({x = s.x, y = s.y + 2, z = s.z})
-
-				elseif p1.y < (s.y - 1) then -- is player move than 1 block lower
-
-					-- dig down
-					can_dig_drop({x = s.x, y = s.y - prop.collisionbox[4] - 0.2, z = s.z})
-
-				else -- dig 2 blocks to make door toward player direction
-
-					local yaw1 = self.object:get_yaw() + pi / 2
-					local p1 = {x = s.x + cos(yaw1), y = s.y, z = s.z + sin(yaw1)}
-
-					-- dig bottom node first incase of door
-					can_dig_drop(p1) ; p1.y = p1.y + 1 ; can_dig_drop(p1)
-				end
-			end
-
-			-- will try again in 2 second
-			self.path.stuck_timer = pathfinding_stuck_timeout - 2
-
-		elseif s.y < p1.y and not self.fly then
-			self:do_jump()
-			self.path.following = true
-		else -- yay i found path
-			self:mob_sound(self.attack and self.sounds.war_cry or self.sounds.random)
-
-			self:set_velocity(self.walk_velocity)
-
-			self.path.following = true -- now follow path
 		end
 	end
+
+	--[[ do we still have a path after check
+	if self.path.way and #self.path.way > 0 then
+
+		-- show path length and particle trail
+		print("-- path length:" .. tonumber(#self.path.way))
+
+		for _,pos in pairs(self.path.way) do
+
+			core.add_particle({pos = pos, texture = "mobs_heart_particle.png",
+					expirationtime = 2, size = 4, collisiondetection = false,
+					vertical = false})
+
+			if height > 1 then
+				pos.y = pos.y + 1
+				core.add_particle({pos = pos, texture = "mobs_heart_particle.png",
+					expirationtime = 2, size = 4, collisiondetection = false,
+					vertical = false})
+			end
+		end
+	end]]
+
+	self.state = ""
+
+	 -- factored out for reuse / possible override
+	self:apply_path(self.path.way, target_pos, true, true)
 end
 
 -- temporary entity for go_to() function
@@ -1820,9 +1818,39 @@ function mob_class:do_runaway_from()
 	end
 end
 
+-- follow a target located at pos p starting from our current pos s
+
+function mob_class:follow_target(s, p, dtime)
+
+	local dist = get_distance(p, s)
+
+	-- dont follow if out of range
+	if dist > self.view_range then
+		self.following = nil ; self.state = "stand" ; return
+	else
+		self:yaw_to_pos(p, 0, 2)
+
+		-- only move if not ordered to stand
+		if dist >= self.reach and self.order ~= "stand" then
+
+			self:set_velocity(self.walk_velocity)
+
+			if self.walk_chance ~= 0 then self:set_animation("walk") end
+
+		elseif self.state ~= "attack" then
+
+			self.state = "standing" -- fake state to pause mob within reach
+			self:set_velocity(0)
+			self:set_animation("stand")
+		end
+
+		return true
+	end
+end
+
 -- follow player if owner or holding item, if fish outta water then flop
 
-function mob_class:follow_flop()
+function mob_class:follow_flop(dtime)
 
 	-- find player to follow
 	if (self.follow ~= "" or self.order == "follow") and not self.following
@@ -1865,33 +1893,8 @@ function mob_class:follow_flop()
 		if is_player(self.following) then p = self.following:get_pos()
 		elseif self.following.object then p = self.following.object:get_pos() end
 
-		if p and self.state ~= "attack" then
+		if p and self.state ~= "attack" and self:follow_target(s, p, dtime) then return end
 
-			local dist = get_distance(p, s)
-
-			-- dont follow if out of range
-			if dist > self.view_range then
-				self.following = nil ; self.state = "stand"
-			else
-				self:yaw_to_pos(p, 0, 2)
-
-				-- dont move if ordered to stand
-				if dist >= self.reach and self.order ~= "stand" then
-
-					self:set_velocity(self.walk_velocity) ; self.state = "walk"
-
-					if self.walk_chance ~= 0 then self:set_animation("walk") end
-
-				elseif self.state ~= "attack" then
-
-					self.state = "standing" -- fake state to pause mob within reach
-					self:set_velocity(0)
-					self:set_animation("stand")
-				end
-
-				return
-			end
-		end
 	elseif self.state == "standing" then self.state = "stand" -- end fake state
 	end
 
@@ -1983,21 +1986,23 @@ function mob_class:do_states(dtime)
 
 		if self.randomly_turn and random(4) == 1 then
 
-			local lp
+			local objs = core.get_objects_inside_radius(s, 3)
+			local obj_pos
 
-			for _,player in pairs(core.get_connected_players()) do
+			for _,obj in pairs(objs) do
 
-				local player_pos = player:get_pos()
-
-				if get_distance(player_pos, s) <= 3 then
-					lp = player_pos ; break
+				if obj:is_player() then
+					obj_pos = obj:get_pos() ; break
 				end
 			end
 
-			-- look at any players nearby, otherwise turn randomly
-			yaw = lp and self:yaw_to_pos(lp) or yaw + random() - 0.5
+			if obj_pos then
+				self:yaw_to_pos(obj_pos, 0, 8) -- look at player
+			else
+				yaw = yaw + random() - 0.5
 
-			self:set_yaw(yaw, 8)
+				self:set_yaw(yaw, 8) -- random turn
+			end
 		end
 
 		self:set_velocity(0)
@@ -2023,7 +2028,7 @@ function mob_class:do_states(dtime)
 
 		self.state = "stand" -- we jump for one cycle before standing again
 
-	elseif self.state == "walk" then
+	elseif self.state == "walk" and not self.following then
 
 		if self.randomly_turn and random(100) <= 30 then
 
@@ -2264,7 +2269,7 @@ function mob_class:do_states(dtime)
 					table_remove(self.path.way, 1) -- remove waypoint once reached
 				end
 
-				p = {x = p1.x, y = p1.y, z = p1.z} -- set new temp target
+				p = self.path.way[1] or p1 -- set to next position with fallback
 			end
 
 			self:yaw_to_pos(p)
@@ -2280,15 +2285,13 @@ function mob_class:do_states(dtime)
 				-- distance padding to stop mob spinning
 				local pad = abs(p.x - s.x) + abs(p.z - s.z)
 
-				self.reach_ext = 0 -- extended ready off by default
-
 				if self.at_cliff or pad < 0.2 then
 
-					-- extend reach slightly when on top of player
-					self.reach_ext = 0.8
+					self.reach_ext = 0.8 -- extend reach when on top of player
 					self:set_velocity(0)
 					self:set_animation("stand")
 				else
+					self.reach_ext = 0 -- reset
 
 					if self.path.stuck then
 						self:set_velocity(self.walk_velocity)
@@ -2296,13 +2299,13 @@ function mob_class:do_states(dtime)
 						self:set_velocity(self.run_velocity)
 					end
 
-					if self.order == "stand" then
-						self:set_animation("stand")
-					elseif self.animation and self.animation.run_start then
-						self:set_animation("run")
-					else
-						self:set_animation("walk")
+					local anim = "walk"
+
+					if self.order == "stand" then anim = "stand"
+					elseif self.animation and self.animation.run_start then anim = "run"
 					end
+
+					self:set_animation(anim)
 				end
 			else -- rnd: if inside reach range
 
@@ -2321,26 +2324,33 @@ function mob_class:do_states(dtime)
 					-- no custom attack or custom attack returns true to continue
 					if not self.custom_attack or self:custom_attack(self, p) then
 
-						self:set_animation("punch")
-
 						local p2, s2 = p, s
 
-						p2.y = p2.y + .5 ; s2.y = s2.y + .5
+						-- approximate mob eye level
+						local cbox = self.object:get_properties().collisionbox
+						local offset = cbox[2] + ((cbox[5] - cbox[2]) * 0.9)
+						s2.y = s2.y + offset
 
+						-- approximate victim eye level
+						cbox = self.attack:get_properties().collisionbox
+						offset = cbox[2] + ((cbox[5] - cbox[2]) * 0.9)
+						p2.y = p2.y + offset
+
+						-- if we can see who we attack, then do so
 						if self:line_of_sight(p2, s2) then
 
-							self:mob_sound(self.sounds.attack) -- attack sound
+							self:set_animation("punch")
+
+							if random(self.sounds.attack_chance or 1) == 1 then
+								self:mob_sound(self.sounds.attack)
+							end
 
 							-- punch player (or what player is attached to)
-							local attached = self.attack:get_attach()
-
-							if attached then
-								self.attack = attached
-							end
+							local target = self.attack:get_attach() or self.attack
 
 							local dgroup = self.damage_group or "fleshy"
 
-							self.attack:punch(self.object, 1.0, {
+							target:punch(self.object, 1.0, {
 								full_punch_interval = 1.0,
 								damage_groups = {[dgroup] = self.damage}
 							}, nil)
@@ -2978,9 +2988,7 @@ function mob_class:get_nodes()
 	local pos = self.object:get_pos()
 	local yaw = self.object:get_yaw()
 	local prop = self.object:get_properties()
-
-	-- child mobs have a lower y_level
-	local y_level = self.child and prop.collisionbox[2] * 0.5 or prop.collisionbox[2]
+	local y_level = prop.collisionbox[2]
 
 	self.standing_in = node_ok(
 			{x = pos.x, y = pos.y + y_level + 0.25, z = pos.z}, "air").name
@@ -3018,8 +3026,7 @@ function mob_class:on_step(dtime, moveresult)
 
 	if use_cmi then cmi.notify_step(self.object, dtime) end
 
-	local pos = self.object:get_pos()
-	local yaw = self.object:get_yaw() ; if not yaw then return end
+	local pos = self.object:get_pos() ; if not pos then return end
 
 	self.node_timer = (self.node_timer or 0) + dtime
 
@@ -3044,39 +3051,16 @@ function mob_class:on_step(dtime, moveresult)
 	-- falling check, return if dead
 	if self:falling(pos) then return end
 
-	-- smooth rotation by ThomasMonroe314
+	-- smooth rotation
 	if self.delay and self.delay > 0 then
 
-		if self.delay == 1 then yaw = self.target_yaw
-		else
-			local dif = abs(yaw - self.target_yaw)
-
-			if yaw > self.target_yaw then
-
-				if dif > pi then
-					dif = 2 * pi - dif
-					yaw = yaw + dif / self.delay -- add
-				else
-					yaw = yaw - dif / self.delay -- subtract
-				end
-
-			elseif yaw < self.target_yaw then
-
-				if dif > pi then
-					dif = 2 * pi - dif
-					yaw = yaw - dif / self.delay -- subtract
-				else
-					yaw = yaw + dif / self.delay -- add
-				end
-			end
-
-			if yaw > (pi * 2) then yaw = yaw - (pi * 2) end
-			if yaw < 0 then yaw = yaw + (pi * 2) end
-		end
+		local rot = self.object:get_rotation()
+		local yaw = rot.y
+		local rotation = shortest_rotation(yaw, self.target_yaw) / self.delay
 
 		self.delay = self.delay - 1
 
-		self:set_yaw(yaw)
+		self:set_yaw(yaw + rotation, 0)
 	end
 
 	-- environmental damage timer (every 1 second)
@@ -3108,9 +3092,7 @@ function mob_class:on_step(dtime, moveresult)
 	end
 
 	-- run custom function (defined in mob lua file) - when false skip going any further
-	if self.do_custom and self:do_custom(dtime, moveresult) == false then
-		return
-	end
+	if self.do_custom and self:do_custom(dtime, moveresult) == false then return end
 
 	self.timer = self.timer + dtime
 
@@ -3131,7 +3113,7 @@ function mob_class:on_step(dtime, moveresult)
 
 		self:general_attack()
 		self:breed()
-		self:follow_flop()
+		self:follow_flop(dtime)
 
 		-- when not attacking call do_states every second (return if dead)
 		if self.state ~= "attack" then
