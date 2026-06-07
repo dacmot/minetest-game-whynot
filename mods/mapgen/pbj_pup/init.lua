@@ -2,7 +2,7 @@
 -- mod check and sound settings
 
 local def = core.get_modpath("default")
-local mcl = core.get_modpath("mcl_core")
+local mcl = core.get_modpath("mcl_sounds")
 local snd = mcl and mcl_sounds.node_sound_glass_defaults() or
 		default.node_sound_glass_defaults()
 
@@ -77,10 +77,10 @@ core.register_node(":nyancat:nyancat_rainbow", {
 
 -- Fuels
 
-core.register_craft({type = "fuel", recipe = "pbj_pup:pbj_pup", burntime = 10})
-core.register_craft({type = "fuel", recipe = "nyancat:nyancat", burntime = 10})
-core.register_craft({type = "fuel", recipe = "moognu:moognu", burntime = 10})
-core.register_craft({type = "fuel", recipe = "nyancat:nyancat_rainbow", burntime = 10})
+core.register_craft({type = "fuel", recipe = "pbj_pup:pbj_pup", burntime = 50})
+core.register_craft({type = "fuel", recipe = "nyancat:nyancat", burntime = 50})
+core.register_craft({type = "fuel", recipe = "moognu:moognu", burntime = 50})
+core.register_craft({type = "fuel", recipe = "nyancat:nyancat_rainbow", burntime = 50})
 
 -- helper function to place Nyan/Pup/Moo with rainbow tail
 
@@ -109,11 +109,12 @@ end
 
 if core.settings:get_bool("pbj_pup_generate") ~= false then
 
+	local chance = tonumber(core.settings:get("pbj_pup_chance") or 1000)
+
 	local function generate(minp, maxp, seed)
 
 		local height_min = -31000
 		local height_max = -32
-		local chance = 1000
 
 		if maxp.y < height_min or minp.y > height_max then return end
 
