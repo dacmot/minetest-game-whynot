@@ -92,7 +92,7 @@ origin https://github.com/mt-mods/unifieddyes (fetch)
 Mod: decor/unifieddyes
 
 origin https://github.com/minetest-mirrors/farming.git (fetch)
-* 647813751316773974d7cad15ba238f65369c547 make sure grass doesnt drop disabled seeds
+* 98c8b6e667cdc3af176deab7f830ad2f1d346d1f Fox rogue T and use l.
 Mod: flora_ores/farming
 
 origin https://codeberg.org/Dacmot/YellowCrystals.git (fetch)
@@ -124,7 +124,7 @@ origin https://github.com/GreenXenith/waffles (fetch)
 Mod: food/waffles
 
 origin https://github.com/APercy/airutils.git (fetch)
-* 43444013b5b9f962c128b254408d8dabde950735 Ensure object position is valid before distance calc
+* ebb55003ec4bea1d591fd16a90f9a11708b0ba17 fix function name
 Mod: libs/airutils
 
 origin https://repo.or.cz/minetest_doc.git (fetch)
@@ -156,7 +156,7 @@ origin https://codeberg.org/Dacmot/sfcraftguide.git (fetch)
 Mod: libs/sfcraftguide
 
 origin https://github.com/mt-mods/xcompat.git (fetch)
-* 9b18ad4b4887d1f0a2c6e9c12693406554b300ab add devtest (#63)
+* ddc57ae60df0dedcba8e8a3ec0139a7d19fba530 documentation cleanup (#74)
 Mod: libs/xcompat
 
 origin https://github.com/Treer/cloudlands/ (fetch)
@@ -176,7 +176,7 @@ origin https://codeberg.org/Dacmot/minetest_mapgen_config.git (fetch)
 Mod: mapgen/minetest_mapgen_config
 
 origin https://github.com/minetest-mirrors/pbj_pup.git (fetch)
-* 4b86456193dbf77c11700404281421a1708425e2 fix wrong light value
+* 8c5d383f04bd42c57eaf0e617116b7c35b00d666 add new screenshot
 Mod: mapgen/pbj_pup
 
 origin https://github.com/GreenXenith/tac_nayn (fetch)
@@ -184,7 +184,7 @@ origin https://github.com/GreenXenith/tac_nayn (fetch)
 Mod: mapgen/tac_nayn
 
 origin https://github.com/minetest-mods/mesecons (fetch)
-* 57a134b555f9d72aced3117d37f858906362fee6 mesecons: Unify duplicated code
+* 706e856e927cf728070660581d36189b2a76b5d8 Lua Controller: Renew formspec for better error message display (#723)
 Mod: mesecons/mesecons
 
 origin https://github.com/minetest/minetest_game (fetch)
@@ -200,11 +200,11 @@ origin https://github.com/minetest-mirrors/mobs_monster.git (fetch)
 Mod: mobs_redo/mobs_monster
 
 origin https://github.com/minetest-mirrors/mobs_redo.git (fetch)
-* bfae013a9a73c10958e0ca0f82413432eb9bf8c6 on_replace early return
+* 818379c4037017b5e5c1a9777e709d2c332ec731 path height checks for walkable instead of air
 Mod: mobs_redo/mobs_redo
 
 origin https://github.com/minetest-mods/3d_armor (fetch)
-* 398f60cc5e69837f8f148105cced2c15a6aa6c0e Ability to use empty textures (#175)
+* 6ceec0b75be4cf066cc4e25a7947917bee8d48cf Improve fire_nodes damage (#176)
 Mod: player/3d_armor
 
 origin https://gitlab.com/dacmot/awards.git (fetch)
