@@ -119,8 +119,8 @@ origin https://github.com/minetest-mirrors/pie.git (fetch)
 * 80f34acbd211d2da5e36c61063e1176492b7d2fd change minetest. to core.
 Mod: food/pie
 
-origin https://github.com/GreenXenith/waffles (fetch)
-* f9ee9962795a44585a7584af34226acaa8bf9d77 Add Spanish translation (#14)
+alternate https://github.com/C-C-Minetest-Server/waffles.git (fetch) origin https://codeberg.org/Dacmot/waffles.git (fetch)
+* 20ab4ea56c51fe693843054675be319307636e4b Fix names of translation files and textdomain headers
 Mod: food/waffles
 
 origin https://github.com/APercy/airutils.git (fetch)
@@ -147,8 +147,8 @@ origin https://github.com/Lazerbeak12345/ediblestuff_api.git (fetch)
 * 63791798d1b5b8bae1e885a95f5d962ce679cf28 Don't use `hbhunger` if damage is disabled
 Mod: libs/ediblestuff_api
 
-origin https://codeberg.org/Dacmot/sfcraftguide.git (fetch)
-* c84b2f2430aaf8159922920c008bc0bff1867ecb Update ContentDB url to codeberg
+fsfcraftguide https://iris.radicle.network/z21MxmXaKJhGMGnNKsZ6fzzi4ZsZi.git (fetch) origin https://codeberg.org/Dacmot/sfcraftguide.git (fetch)
+* 1d1e5c8b8d8cf88ba55c923c94539b6d57f88557 fix(licenses): all media now conforms to the REUSE specification
 Mod: libs/sfcraftguide
 
 origin https://github.com/mt-mods/xcompat.git (fetch)
