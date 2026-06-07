@@ -89,9 +89,6 @@
 [submodule "builder/mods_src/libs/doc_reveal_chest"]
 	path = builder/mods_src/libs/doc_reveal_chest
 	url = https://github.com/minetest-mods/doc_reveal_chest
-[submodule "builder/mods_src/libs/intllib"]
-	path = builder/mods_src/libs/intllib
-	url = https://github.com/minetest-mods/intllib
 [submodule "builder/mods_src/maidroid"]
 	path = builder/mods_src/tools/maidroid
 	url = https://github.com/thePlasm/maidroid
