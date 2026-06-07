@@ -5,7 +5,7 @@
   #
   declare -Ag BRANCHES=(
     [minetest_game/minetest_game]=origin/stable-5 # Stay on stable version
-    [decor/laptop]=multicraft
+    [decor/laptop]=ddf9c547afedbd19fbb46e9ff949b56f9d6c63ec # error with missing utf8 module
   )
 
   #
