@@ -1,5 +1,4 @@
 local S = laptop.S
-local len8 = utf8.len
 
 local rc = laptop.recipe_compat -- Recipe items from other mods
 
@@ -262,7 +261,7 @@ minetest.register_craftitem("laptop:printed_paper", {
 				"label[0,0;" .. minetest.formspec_escape(data.title or "unnamed") ..
 				" by " .. (data.author or "unknown") .. " from " .. os.date("%c", data.timestamp) .. "]"..
 				"textarea[0.5,1;7.5,7;;" ..
-				minetest.formspec_escape(data.text or "") .. ";]"
+				minetest.formspec_escape(data.text or "test text") .. ";]"
 	minetest.show_formspec(user:get_player_name(), "laptop:printed_paper", formspec)
 	return itemstack
 	end

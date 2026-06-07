@@ -37,7 +37,7 @@ laptop.register_app("stickynote", {
 		local data = mtos.bdev:get_app_storage('system', 'stickynote')
 		if not data then return end
 		if fields.text then
-			data.text = laptop.truncate_text(fields.text, laptop.max_text_size)
+			data.text = fields.text
 		end
 
 		if fields.load then
