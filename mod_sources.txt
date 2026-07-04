@@ -1,6 +1,6 @@
 
 origin https://github.com/minetest-mirrors/ambience.git (fetch)
-* d0b12b1cce4823da66282ebc623c233885332248 add 1 in 2 chance of seagull in beach set
+* 6a3a1f0b86333624d4688aa6e14245e40c0550b1 lil tidy
 Mod: ambience/ambience
 
 origin https://github.com/minetest-mods/lightning (fetch)
@@ -84,7 +84,7 @@ origin https://github.com/v-rob/slats (fetch)
 Mod: decor/slats
 
 origin https://github.com/minetest-mods/ts_furniture (fetch)
-* 21bbb75b5ab7c7bd111ff457d1a0ad7a339c68a7 Add player_monoids support (#22)
+* aeef4d69e83c94f764b8ea23ac7ccaa479658cec fix: Respect set_animation's eye offsetting
 Mod: decor/ts_furniture
 
 origin https://github.com/mt-mods/unifieddyes (fetch)
@@ -92,7 +92,7 @@ origin https://github.com/mt-mods/unifieddyes (fetch)
 Mod: decor/unifieddyes
 
 origin https://github.com/minetest-mirrors/farming.git (fetch)
-* 98c8b6e667cdc3af176deab7f830ad2f1d346d1f Fox rogue T and use l.
+* da0a4f2ffd9908de95395a082f8ad1bc5975708f fix acv typo
 Mod: flora_ores/farming
 
 origin https://codeberg.org/Dacmot/YellowCrystals.git (fetch)
@@ -112,11 +112,11 @@ origin https://github.com/rubenwardy/food_sweet (fetch)
 Mod: food/food_sweet
 
 origin https://github.com/minetest-mods/mtfoods (fetch)
-* ae3eb42c9ba6591e3fda13a25e902e64ff012340 replace global "ing" by more meaningful global mtfoods.ingredients variable
+* 65757ff5c2a9dc04623d01a7f1ac9a1eb6467a55 Added locale files and translations
 Mod: food/mtfoods
 
 origin https://github.com/minetest-mirrors/pie.git (fetch)
-* 80f34acbd211d2da5e36c61063e1176492b7d2fd change minetest. to core.
+* 056ed21ebd7477b276245b17a218c232a0d00239 new screenshot
 Mod: food/pie
 
 alternate https://github.com/C-C-Minetest-Server/waffles.git (fetch) origin https://codeberg.org/Dacmot/waffles.git (fetch)
@@ -124,7 +124,7 @@ alternate https://github.com/C-C-Minetest-Server/waffles.git (fetch) origin http
 Mod: food/waffles
 
 origin https://github.com/APercy/airutils.git (fetch)
-* ebb55003ec4bea1d591fd16a90f9a11708b0ba17 fix function name
+* 5172b9cd302f48569795bef6277b352931a4b217 fix bug issue #82
 Mod: libs/airutils
 
 origin https://repo.or.cz/minetest_doc.git (fetch)
@@ -180,7 +180,7 @@ origin https://github.com/GreenXenith/tac_nayn (fetch)
 Mod: mapgen/tac_nayn
 
 origin https://github.com/minetest-mods/mesecons (fetch)
-* 706e856e927cf728070660581d36189b2a76b5d8 Lua Controller: Renew formspec for better error message display (#723)
+* 3a2d6916ee090353b69bd019f9954971ddc8f4a9 Futureproof luacontrollers against additional arguments in on_construct (#725)
 Mod: mesecons/mesecons
 
 origin https://github.com/minetest/minetest_game (fetch)
@@ -192,11 +192,11 @@ origin https://codeberg.org/tenplus1/mobs_ghost_redo (fetch)
 Mod: mobs_redo/mobs_ghost_redo
 
 origin https://github.com/minetest-mirrors/mobs_monster.git (fetch)
-* baabd42805da2e6ddede1c4c48dc14bfac132163 tweak fireball
+* adc76336bf596ea49b86cb45b852848f108e1ebd tweak dungeon master and mese monster dogshoot times
 Mod: mobs_redo/mobs_monster
 
 origin https://github.com/minetest-mirrors/mobs_redo.git (fetch)
-* 818379c4037017b5e5c1a9777e709d2c332ec731 path height checks for walkable instead of air
+* 646ba60a9962b2948a41ee8d56552318d1bc751e fix fall damage modifier check
 Mod: mobs_redo/mobs_redo
 
 origin https://github.com/minetest-mods/3d_armor (fetch)
@@ -268,7 +268,7 @@ origin https://github.com/Lokrates/Biofuel.git (fetch)
 Mod: tools/biofuel
 
 origin https://github.com/minetest-mirrors/bonemeal.git (fetch)
-* 8294853f9aa69ce4455b80ee533a5cac05983abf tidy check_crop
+* d8c7c9418866f76c7a6bacc54b2f32b3c6f2011f mulch is fuel
 Mod: tools/bonemeal
 
 origin https://github.com/SmallJoker/boost_cart (fetch)
@@ -304,7 +304,7 @@ origin https://github.com/minetest-mods/hopper (fetch)
 Mod: tools/hopper
 
 origin https://github.com/minetest-mods/jumping (fetch)
-* 02eeafdc031441ca2f08718326f92854fe17cb21 Protect nodes from being overwritten by mapgen (#12)
+* 7717f4d91dc09e8917f5fdf8d270af24a5d258bd Update meta data and set up luacheck
 Mod: tools/jumping
 
 origin https://github.com/thePlasm/maidroid (fetch)
