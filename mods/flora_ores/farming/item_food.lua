@@ -2,6 +2,42 @@
 local S = core.get_translator("farming")
 local a = farming.recipe_items
 
+-- Apple Cider Vinegar
+
+core.register_node("farming:acv", {
+	description = S("Apple Cider Vinegar"),
+	drawtype = "plantlike",
+	visual_scale = 0.8,
+	tiles = {"farming_acv.png"},
+	inventory_image = "farming_acv.png",
+	wield_image = "farming_acv.png",
+	paramtype = "light",
+	is_ground_content = false,
+	sunlight_propagates = true,
+	walkable = false,
+	selection_box = {type = "fixed", fixed = {-0.15, -0.5, -0.15, 0.15, 0.3, 0.15}},
+	groups = {food_vinegar = 1, vessel = 1, dig_immediate = 3, attached_node = 1},
+	sounds = farming.node_sound_defaults(),
+})
+
+-- Cinnamon Powder
+
+minetest.register_craftitem("farming:cinnamon_ground", {
+	description = S("Ground Cinnamon"),
+	inventory_image = "farming_cinnamon_ground.png",
+	groups = {food_cinnamon = 1, compostability = 35}
+})
+
+-- Cinnamon Roll
+
+minetest.register_craftitem("farming:cinnamon_roll", {
+	description = S("Cinnamon Roll"),
+	inventory_image = "farming_cinnamon_roll.png",
+	on_use = minetest.item_eat(4)
+})
+
+farming.add_eatable("farming:cinnamon_roll", 4)
+
 -- Flour
 
 core.register_craftitem("farming:flour", {
@@ -364,11 +400,9 @@ core.register_node("farming:salt", {
 
 		if not objs or #objs ~= 1 then return end
 
-		local salt, ent = nil, nil
-
 		for k, obj in pairs(objs) do
 
-			ent = obj:get_luaentity()
+			local ent = obj:get_luaentity()
 
 			if ent and ent.name == "__builtin:item"
 			and ent.itemstring == "farming:salt " .. needed then
@@ -692,6 +726,14 @@ core.register_craftitem("farming:butter_vegan", {
 	description = S("Vegan Butter"),
 	inventory_image = "farming_vegan_butter.png",
 	groups = {food_butter = 1}
+})
+
+-- Vegan Egg
+
+core.register_craftitem("farming:egg_vegan", {
+	description = S("Vegan Egg"),
+	inventory_image = "farming_vegan_egg.png",
+	groups = {food_egg = 1}
 })
 
 -- Onigiri
